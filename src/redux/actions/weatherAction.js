@@ -1,4 +1,4 @@
-import { weatherAxios, foreCastAxios } from "../../axios/axiosInstance";
+import { weatherAxios, foreCastAxios } from "../../services/axios/axiosInstance";
 import {
   FETCH_FORECAST_ERROR,
   FETCH_FORECAST_PENDING,

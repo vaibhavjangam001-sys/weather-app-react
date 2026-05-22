@@ -9,18 +9,11 @@ const App = () => {
   const error = useSelector((state) => state.weatherReducer.error);
   
 
-  console.log(city);
-  console.log("weather",weather);
-  console.log("forcase",foreCast);
-  console.log(loading);
-  console.log(error);
-
-
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchWeather("mumbai"));
-    dispatch(fetchForeCast("mumbai"));
+    // dispatch(fetchWeather("mumbai"));
+    // dispatch(fetchForeCast("mumbai"));
   }, []);
 
   return <div className="bg-red-500">App</div>;
