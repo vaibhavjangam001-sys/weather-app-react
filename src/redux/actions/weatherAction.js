@@ -1,4 +1,4 @@
-import { weatherAxios, foreCastAxios } from "../../services/axios/axiosInstance";
+import { weatherAxios, foreCastAxios } from "../../services/axiosInstance";
 import {
   FETCH_FORECAST_ERROR,
   FETCH_FORECAST_PENDING,
@@ -7,7 +7,7 @@ import {
   FETCH_WEATHER_PENDING,
   FETCH_WEATHER_SUCCESS,
   SET_CITY,
-} from "../constant/weatherConstants";
+} from "../constants/weatherConstants";
 
 export const fetchWeatherPending = () => {
   return {
