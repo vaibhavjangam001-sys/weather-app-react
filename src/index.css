@@ -9,6 +9,5 @@
 body {
     min-height: 100vh;
     width: 100vw;
-    background: linear-gradient(to bottom right, #38bdf8,#3b82f6,#4f46e5);
     cursor:default;
 }
