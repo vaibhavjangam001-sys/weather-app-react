@@ -1,11 +1,12 @@
-import Navbar from "./components/Navbar";
+import MainLayout from "./layouts/MainLayout";
+import Home from "./pages/Home";
 
 function App() {
-  return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900">
-      <Navbar />
-    </div>
-  );
+   return (
+      <MainLayout>
+         <Home/>
+      </MainLayout>
+   )
 }
 
 export default App;

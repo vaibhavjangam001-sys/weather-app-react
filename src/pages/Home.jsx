@@ -1,0 +1,9 @@
+const Home = () => {
+  return (
+    <section className="flex min-h-[calc(100vh-5rem)] items-center justify-center">
+      <h2 className="text-3xl font-semibold">Home</h2>
+    </section>
+  );
+};
+
+export default Home;
