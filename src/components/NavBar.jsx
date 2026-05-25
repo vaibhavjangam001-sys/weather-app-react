@@ -1,6 +1,4 @@
 import { TiThMenu } from "react-icons/ti";
-import { BsToggle2Off } from "react-icons/bs";
-import { BsToggle2On } from "react-icons/bs";
 import { BsPersonFill } from "react-icons/bs";
 import { TiWeatherStormy } from "react-icons/ti";
 import { IoHomeOutline } from "react-icons/io5";
@@ -8,10 +6,9 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FaRegNewspaper } from "react-icons/fa";
 import { MdOutlineSportsCricket } from "react-icons/md";
 import { MdOutlineSettings } from "react-icons/md";
-import Login from "../pages/Login";
 
 const Navbar = () => {
-  const mobileNavLink = [
+  const mobileNavLinks = [
     {
       name: "Home",
       link: "/",
@@ -36,13 +33,13 @@ const Navbar = () => {
 
   const navigate = useNavigate();
 
-  const handleLogIn = () => {
+  const handleLogin = () => {
     navigate("/login");
   };
 
-  const LoginLocation = useLocation();
+  const location = useLocation();
 
-  const isLoginPage = LoginLocation.pathname === "/login";
+  const isLoginPage = location.pathname === "/login";
 
   return (
     <>
@@ -58,30 +55,30 @@ const Navbar = () => {
           {!isLoginPage && (
             <div className="flex justify-center items-center gap-6">
               <button
-                onClick={handleLogIn}
+                onClick={handleLogin}
                 className="bg-emerald-500 cursor-pointer active:bg-emerald-400 flex gap-2 items-center rounded-lg border text-sm px-3 py-1 border-white/20 "
               >
-                <BsPersonFill className="text-lg" />{" "}
+                <BsPersonFill className="text-lg" />
                 <span className="font-bold">LOG IN</span>
               </button>
-              <div>
+              <button aria-label="Open menu" className="cursor-pointer border border-white/10 rounded-sm p-1">
                 <TiThMenu className="text-2xl" />
-              </div>
+              </button>
             </div>
           )}
         </div>
 
         {/* All Secontion Home,news,sport,setting */}
         {!isLoginPage && (
-          <div className="h-16 w-full  flex  border-b">
-            {mobileNavLink.map((item) => (
+          <div className="h-16 w-full  flex ">
+            {mobileNavLinks.map((item) => (
               <div
                 key={item.name}
                 className={`flex justify-center items-center flex-1 ${item.color}`}
               >
                 <NavLink
                   className={({ isActive }) =>
-                    `flex justify-center h-full w-full items-center font-bold  flex-col ${isActive ? "bg-gray-600 border-b-2" : ""}`
+                    `flex justify-center h-full w-full items-center font-bold  flex-col ${isActive ? " border-b-2 border-white text-amber-700" : ""}`
                   }
                   to={item.link}
                 >
