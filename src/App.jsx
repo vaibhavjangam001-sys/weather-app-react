@@ -1,10 +1,12 @@
-import MainLayout from "./layouts/MainLayout";
-import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
+
+
+import Home from "./pages/Home";
 import News from "./pages/News";
 import Sport from "./pages/Sport";
 import Setting from "./pages/Setting";
 import Login from "./pages/Login";
+import MainLayout from "./layouts/MainLayout";
 
 function App() {
   return (
