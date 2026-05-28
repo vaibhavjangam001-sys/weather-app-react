@@ -1,11 +1,20 @@
+import { useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 const MainLayout = ({ children }) => {
+  const location = useLocation();
+
+  const isLoginPage = location.pathname === "/login";
+
   return (
-    <div className="min-h-screen  bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900 text-white">
       <Navbar />
 
-      <main className="pt-[8rem] min-h-[calc(100vh-8rem)">
+      <main
+        className={`${
+          isLoginPage ? "min-h-screen" : "min-h-[calc(100vh-8rem)] pt-[8rem]"
+        }`}
+      >
         {children}
       </main>
     </div>
