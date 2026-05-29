@@ -55,7 +55,7 @@ const Navbar = () => {
           </button>
 
           {/* Desktop Navigation */}
-          <div className=" hidden sm:gap-2 h-10 flex-1 rounded-2xl backdrop-blur-md sm:flex">
+          <div className=" hidden sm:gap-2 h-10 flex-1 rounded-2xl  sm:flex">
             {NAV_LINKS.map((item) => (
               <NavLink
                 key={item.name}

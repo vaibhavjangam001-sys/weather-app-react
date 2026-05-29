@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { TiWeatherStormy } from "react-icons/ti";
+import Storm from "../components/weatherAnimation/Storm";
+
 
 import Login from "../components/LoginPage/Login";
 import Signup from "../components/LoginPage/Signup";
@@ -12,8 +13,7 @@ const LoginSection = () => {
     <section className="flex h-full w-full flex-col items-center justify-start gap-4 py-2 px-6">
       {/* Brand */}
       <div className="flex flex-col items-center gap-2">
-        <TiWeatherStormy className="text-8xl text-gray-400" />
-
+        <Storm/>
         {isLogin ? (
           <h1 className="text-center text-3xl font-bold italic text-gray-400">
             Welcome Back
