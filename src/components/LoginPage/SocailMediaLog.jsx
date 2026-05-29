@@ -17,21 +17,21 @@ const SocailMediaLog = () => {
       {/* Social Login Buttons */}
       <div className="flex w-full max-w-md flex-col gap-2">
         {/* Google */}
-        <button className="flex w-full items-center justify-center gap-4 rounded-lg border-b-2 bg-white p-2 text-lg font-bold text-black transition-all duration-300 active:scale-95 active:bg-white/70">
+        <button className="flex w-full items-center cursor-pointer justify-center gap-4 rounded-lg border-b-2 bg-white p-2 text-lg font-bold text-black transition-all duration-300 active:scale-95 active:bg-white/70">
           <FaGoogle className="text-2xl" />
 
           <span>Login with Google</span>
         </button>
 
         {/* Facebook */}
-        <button className="flex w-full items-center justify-center gap-4 rounded-lg border-b-2 bg-blue-500 p-2 text-lg font-bold text-black transition-all duration-300 active:scale-95 active:bg-blue-400">
+        <button className="flex w-full items-center justify-center cursor-pointer gap-4 rounded-lg border-b-2 bg-blue-500 p-2 text-lg font-bold text-black transition-all duration-300 active:scale-95 active:bg-blue-400">
           <FaFacebook className="text-2xl" />
 
           <span>Login with Facebook</span>
         </button>
 
         {/* Twitter */}
-        <button className="flex w-full items-center justify-center gap-4 rounded-lg border-b-2 bg-sky-400 p-2 text-lg font-bold text-black transition-all duration-300 active:scale-95 active:bg-sky-300">
+        <button className="flex w-full items-center justify-center gap-4 rounded-lg border-b-2 cursor-pointer bg-sky-400 p-2 text-lg font-bold text-black transition-all duration-300 active:scale-95 active:bg-sky-300">
           <FaTwitter className="text-2xl" />
 
           <span>Login with Twitter</span>

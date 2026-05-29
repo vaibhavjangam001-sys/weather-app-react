@@ -35,7 +35,7 @@ const LoginSection = () => {
             isLogin ? "border-b-4 border-amber-50" : ""
           }`}
         >
-          <h1 className="text-2xl font-bold sm:text-3xl">Login</h1>
+          <h1 className="text-2xl font-bold sm:text-3xl  text-gray-400">Login</h1>
         </div>
 
         <div
@@ -44,7 +44,7 @@ const LoginSection = () => {
             !isLogin ? "border-b-4 border-amber-50" : ""
           }`}
         >
-          <h1 className="text-2xl font-bold sm:text-3xl">Signup</h1>
+          <h1 className="text-2xl font-bold sm:text-3xl  text-gray-400">New User</h1>
         </div>
       </div>
 
