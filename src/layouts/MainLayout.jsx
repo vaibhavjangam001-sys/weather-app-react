@@ -12,7 +12,9 @@ const MainLayout = ({ children }) => {
 
       <main
         className={`${
-          isLoginPage ? "min-h-screen" : "min-h-[calc(100vh-8rem)] pt-[8rem]"
+          isLoginPage
+            ? "min-h-screen"
+            : "min-h-[calc(100vh-8rem)] pt-32 sm:min-h-[calc(100vh-4rem)] sm:pt-16"
         }`}
       >
         {children}

@@ -1,20 +1,9 @@
-import {
-  TiThMenu,
-  TiWeatherStormy,
-} from "react-icons/ti";
+import { TiThMenu, TiWeatherStormy } from "react-icons/ti";
 import { BsPersonFill } from "react-icons/bs";
 import { IoHomeOutline } from "react-icons/io5";
 import { FaRegNewspaper } from "react-icons/fa";
-import {
-  MdOutlineSportsCricket,
-  MdOutlineSettings,
-} from "react-icons/md";
-
-import {
-  NavLink,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { MdOutlineSportsCricket, MdOutlineSettings } from "react-icons/md";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 const NAV_LINKS = [
   {
@@ -45,10 +34,6 @@ const Navbar = () => {
 
   const isLoginPage = location.pathname === "/login";
 
-  const handleLogin = () => {
-    navigate("/login");
-  };
-
   if (isLoginPage) return null;
 
   return (
@@ -57,20 +42,45 @@ const Navbar = () => {
       <div className="h-16 border-b border-white/10 bg-slate-900/80 backdrop-blur-md">
         <div className="flex h-full items-center justify-between px-4">
           {/* Logo */}
-          <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => navigate("/")}
+            className="flex flex-1 cursor-pointer items-center gap-2"
+          >
             <TiWeatherStormy className="text-4xl" />
 
             <h1 className="text-2xl font-semibold">
               Weather
             </h1>
+          </button>
+
+          {/* Desktop Navigation */}
+          <div className=" hidden sm:gap-2 h-10 flex-1 rounded-2xl backdrop-blur-md sm:flex">
+            {NAV_LINKS.map((item) => (
+              <NavLink
+                key={item.name}
+                to={item.link}
+                className={({ isActive }) =>
+                  `flex flex-1 items-center justify-center hover:text-white hover:border-b-2 transition-all duration-100 px-2 font-semibold  ${
+                    isActive
+                      ? "border-b-2  border-white"
+                      : "text-gray-400"
+                  }`
+                }
+              >
+                <span className="text-lg lg:text-xl">
+                  {item.name}
+                </span>
+              </NavLink>
+            ))}
           </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-6">
+          <div className="flex flex-1 items-center justify-end gap-4">
             <button
               type="button"
-              onClick={handleLogin}
-              className="flex cursor-pointer items-center gap-2 rounded-lg border border-white/20 bg-emerald-500 px-4 py-1.5 text-sm transition-all duration-200 active:bg-emerald-400"
+              onClick={() => navigate("/login")}
+              className="flex cursor-pointer items-center gap-2 rounded-lg border border-white/20 bg-emerald-500 px-4 py-1.5 text-sm transition-all duration-200 hover:bg-emerald-600 active:scale-95"
             >
               <BsPersonFill className="text-lg" />
 
@@ -79,10 +89,11 @@ const Navbar = () => {
               </span>
             </button>
 
+            {/* Mobile Menu Button */}
             <button
               type="button"
               aria-label="Open menu"
-              className="cursor-pointer rounded-sm border border-white/10 p-1 transition-all duration-200"
+              className="cursor-pointer rounded-sm border border-white/10 p-1 transition-all duration-200 "
             >
               <TiThMenu className="text-2xl" />
             </button>
@@ -90,7 +101,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Bottom Navigation */}
       <div className="flex h-16 w-full bg-slate-900/80 backdrop-blur-md sm:hidden">
         {NAV_LINKS.map((item) => {
           const Icon = item.icon;
@@ -100,42 +111,21 @@ const Navbar = () => {
               key={item.name}
               to={item.link}
               className={({ isActive }) =>
-                `flex h-full flex-1 flex-col items-center justify-center gap-1 font-bold transition-all duration-200 ${
+                `flex h-full flex-1 flex-col items-center justify-center gap-1 transition-all duration-200 ${
                   isActive
-                    ? "border-b-2 border-red-800 text-red-800"
+                    ? "border-b-2 border-red-700 text-red-700"
                     : ""
                 }`
               }
             >
               <Icon className="text-xl" />
 
-              <span className="text-sm">
+              <span className="text-xs font-medium">
                 {item.name}
               </span>
             </NavLink>
           );
         })}
-      </div>
-
-      {/* Desktop Navigation */}
-      <div className="mx-auto mt-4 hidden h-10 w-[70%] rounded-2xl bg-gray-400/80 px-4 backdrop-blur-md sm:flex">
-        {NAV_LINKS.map((item) => (
-          <NavLink
-            key={item.name}
-            to={item.link}
-            className={({ isActive }) =>
-              `flex h-full flex-1 items-center justify-center gap-1 px-4 font-bold transition-all duration-200 ${
-                isActive
-                  ? "border-b-4 border-white"
-                  : ""
-              }`
-            }
-          >
-            <span className="text-2xl font-bold">
-              {item.name}
-            </span>
-          </NavLink>
-        ))}
       </div>
     </nav>
   );
