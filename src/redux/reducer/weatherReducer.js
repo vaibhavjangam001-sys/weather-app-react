@@ -1,7 +1,4 @@
 import {
-  FETCH_FORECAST_ERROR,
-  FETCH_FORECAST_PENDING,
-  FETCH_FORECAST_SUCCESS,
   FETCH_WEATHER_ERROR,
   FETCH_WEATHER_PENDING,
   FETCH_WEATHER_SUCCESS,
@@ -11,7 +8,6 @@ import {
 const initialState = {
   city: "aurangabad",
   weather: null,
-  foreCast: null,
   isLoading: false,
   error: null,
 };
@@ -34,24 +30,6 @@ const weatherReducer = (state = initialState, action) => {
       ...state,
       isLoading: false,
       weather: action.payload,
-    };
-  } else if (action.type === FETCH_FORECAST_PENDING) {
-    return {
-      ...state,
-      isLoading: true,
-      error: null,
-    };
-  } else if (action.type === FETCH_FORECAST_ERROR) {
-    return {
-      ...state,
-      isLoading: false,
-      error: action.payload,
-    };
-  } else if (action.type === FETCH_FORECAST_SUCCESS) {
-    return {
-      ...state,
-      isLoading: false,
-      foreCast: action.payload,
     };
   } else if (action.type === SET_CITY) {
     return {

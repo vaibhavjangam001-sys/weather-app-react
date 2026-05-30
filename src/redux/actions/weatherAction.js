@@ -1,8 +1,5 @@
-import { weatherAxios, foreCastAxios } from "../../services/axiosInstance";
+import { weatherAxios, geoAxios } from "../../services/axiosInstance";
 import {
-  FETCH_FORECAST_ERROR,
-  FETCH_FORECAST_PENDING,
-  FETCH_FORECAST_SUCCESS,
   FETCH_WEATHER_ERROR,
   FETCH_WEATHER_PENDING,
   FETCH_WEATHER_SUCCESS,
@@ -29,26 +26,6 @@ export const fetchWeatherError = (error) => {
   };
 };
 
-export const fetchForeCastPending = () => {
-  return {
-    type: FETCH_FORECAST_PENDING,
-  };
-};
-
-export const fetchForeCastSuccess = (data) => {
-  return {
-    type: FETCH_FORECAST_SUCCESS,
-    payload: data,
-  };
-};
-
-export const fetchForeCastError = (error) => {
-  return {
-    type: FETCH_FORECAST_ERROR,
-    payload: error,
-  };
-};
-
 export const setCity = (city) => {
   return {
     type: SET_CITY,
@@ -61,40 +38,47 @@ export const fetchWeather = (city) => {
     dispatch(fetchWeatherPending());
 
     try {
-      const API_KEY = import.meta.env.VITE_API_KEY;
-
-      const weatherData = await weatherAxios.get("/data/2.5/weather", {
+      const geoResponse = await geoAxios.get("/v1/search", {
         params: {
-          q: city,
-          appid: API_KEY,
-          units: "metric",
+          name: city,
+          count: 1,
+          language: "en",
+          format: "json",
         },
       });
 
-      dispatch(fetchWeatherSuccess(weatherData.data));
-    } catch (error) {
-      dispatch(fetchWeatherError(error));
-    }
-  };
-};
+      const location = geoResponse.data.results?.[0];
 
-export const fetchForeCast = (city) => {
-  return async (dispatch) => {
-    dispatch(fetchForeCastPending());
+      if (!location) {
+        throw new Error("City not Found");
+      }
 
-    try {
-      const API_KEY = import.meta.env.VITE_API_KEY;
-      const foreCastData = await foreCastAxios.get("/data/2.5/forecast", {
+      const weatherResponse = await weatherAxios.get("/v1/forecast", {
         params: {
-          q: city,
-          appid: API_KEY,
-          units: "metric",
+          latitude: location.latitude,
+          longitude: location.longitude,
+
+          current:
+            "temperature_2m,apparent_temperature,weather_code,relative_humidity_2m,pressure_msl,wind_speed_10m,wind_direction_10m",
+
+          hourly:
+            "temperature_2m,weather_code,visibility,cloud_cover,precipitation,wind_gusts_10m",
+
+          daily:
+            "temperature_2m_max,temperature_2m_min,weather_code,sunrise,sunset",
+
+          timezone: "auto",
         },
       });
 
-      dispatch(fetchForeCastSuccess(foreCastData.data.list));
+      dispatch(
+        fetchWeatherSuccess({
+          ...weatherResponse.data,
+          city: location.name,
+        }),
+      );
     } catch (error) {
-      dispatch(fetchForeCastError(error));
+      dispatch(fetchWeatherError(error.message));
     }
   };
 };

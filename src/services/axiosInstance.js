@@ -1,13 +1,13 @@
 import axios from "axios";
 
 const weatherAxios = axios.create({
-  baseURL: "https://api.openweathermap.org",
+  baseURL: "https://api.open-meteo.com",
   timeout: 5000,
 });
 
-const foreCastAxios = axios.create({
-  baseURL: "https://api.openweathermap.org",
+const geoAxios = axios.create({
+  baseURL: "https://geocoding-api.open-meteo.com",
   timeout: 5000,
 });
 
-export { weatherAxios, foreCastAxios };
+export { weatherAxios, geoAxios };
