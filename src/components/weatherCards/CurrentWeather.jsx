@@ -18,7 +18,6 @@ const CurrentWeather = () => {
     hour: "numeric",
     minute: "2-digit",
   });
-  console.log(weather);
 
   return (
     <>
@@ -37,7 +36,6 @@ const CurrentWeather = () => {
         </div>
 
         <h2 className="sm:text-5xl  text-3xl font-bold">
-          {" "}
           {Math.round(weather.current.temperature_2m)}°C
         </h2>
 

@@ -16,11 +16,8 @@ const NAV_LINKS = [
     link: "/news",
     icon: FaRegNewspaper,
   },
-  {
-    name: "Sport",
-    link: "/sport",
-    icon: MdOutlineSportsCricket,
-  },
+  
+
   {
     name: "Settings",
     link: "/setting",
@@ -37,7 +34,7 @@ const Navbar = () => {
   if (isLoginPage) return null;
 
   return (
-    <nav className="fixed top-0 left-0 z-50 w-full">
+    <nav className="fixed top-0 left-0  z-50 w-full">
       {/* Top Navbar */}
       <div className="h-16 border-b border-white/10 bg-slate-900/80 backdrop-blur-md">
         <div className="flex h-full items-center justify-between px-4">
