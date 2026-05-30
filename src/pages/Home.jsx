@@ -6,6 +6,7 @@ import Weatherhighlight from "../components/weatherCards/Weatherhighlight";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchWeather } from "../redux/actions/weatherAction";
+import Loading from "../components/weatherAnimation/Loading"
 
 const Home = () => {
   const [searchCity, setSearchCity] = useState("");
@@ -20,7 +21,9 @@ const Home = () => {
   }, [dispatch]);
 
   return (
-    <section className="min-h-[calc(100vh-8rem)] flex  flex-col sm:min-h-[calc(100vh-4rem)] p-4">
+    <section
+      className={`min-h-[calc(100vh-8rem)] flex  sm:min-h-[calc(100vh-4rem)] p-4 flex-col`}
+    >
       <div className="h-12 flex justify-end items-center px-4 lg:px-28 w-full">
         <input
           value={searchCity}
@@ -43,12 +46,20 @@ const Home = () => {
           </button>
         </div>
       </div>
-      <div className="flex-1 grid grid-cols-1 gap-6 px-4 py-4 md:grid-cols-2 lg:px-28">
+      <div
+        className={`${isLoading ? "flex justify-center items-center" : "flex-1 grid grid-cols-1 gap-6 px-4 py-4 md:grid-cols-2 lg:px-28"}`}
+      >
         {/* Weather Card */}
-        <CurrentWeather />
-        <ForeCastWeather />
-        <WeeklyWeatherForeCast />
-        <Weatherhighlight />
+        {isLoading ? (
+          <Loading/>
+        ) : (
+          <>
+            <CurrentWeather />
+            <ForeCastWeather />
+            <WeeklyWeatherForeCast />
+            <Weatherhighlight />
+          </>
+        )}
       </div>
     </section>
   );

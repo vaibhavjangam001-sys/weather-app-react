@@ -6,7 +6,7 @@ const CurrentWeather = () => {
   const { weather } = useSelector((state) => state.weatherReducer);
 
   if (!weather) {
-    return <div>Loading...</div>;
+    return null;
   }
 
 
