@@ -22,10 +22,7 @@ const Login = () => {
             Wrong Password
           </p>
 
-          <a
-            className="text-sm text-blue-500 hover:underline sm:text-base"
-            href="#"
-          >
+          <a className="text-sm text-blue-500 hover:underline sm:text-base" href="#">
             Forget password ?
           </a>
         </div>

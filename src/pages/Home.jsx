@@ -17,15 +17,15 @@ const Home = () => {
   );
 
   useEffect(() => {
-    dispatch(fetchWeather("aurangabad"));
+    dispatch(fetchWeather("india"));
   }, [dispatch]);
 
   return (
     <section
       className={`min-h-[calc(100vh-8rem)] flex  sm:min-h-[calc(100vh-4rem)] p-4 flex-col`}
     >
-      <div className="h-12 flex justify-center items-center lg:px-28  border-b w-full">
-        <div className="flex flex-1 mb-3">
+      <div className="h-12 flex justify-center items-center px-4 lg:px-28  border-b w-full">
+        <div className="flex flex-1 mb-4">
           <input
             value={searchCity}
             onChange={(e) => setSearchCity(e.target.value)}
