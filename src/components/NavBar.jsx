@@ -16,7 +16,6 @@ const NAV_LINKS = [
     link: "/news",
     icon: FaRegNewspaper,
   },
-  
 
   {
     name: "Settings",
@@ -46,9 +45,7 @@ const Navbar = () => {
           >
             <TiWeatherStormy className="text-4xl" />
 
-            <h1 className="text-2xl font-semibold">
-              Weather
-            </h1>
+            <h1 className="text-2xl font-semibold">Weather</h1>
           </button>
 
           {/* Desktop Navigation */}
@@ -59,15 +56,11 @@ const Navbar = () => {
                 to={item.link}
                 className={({ isActive }) =>
                   `flex flex-1 items-center justify-center hover:text-white hover:border-b-2 transition-all duration-100 px-2 font-semibold  ${
-                    isActive
-                      ? "border-b-2  border-white"
-                      : "text-gray-400"
+                    isActive ? "border-b-2  border-white" : "text-gray-400"
                   }`
                 }
               >
-                <span className="text-lg lg:text-xl">
-                  {item.name}
-                </span>
+                <span className="text-lg lg:text-xl">{item.name}</span>
               </NavLink>
             ))}
           </div>
@@ -81,9 +74,7 @@ const Navbar = () => {
             >
               <BsPersonFill className="text-lg" />
 
-              <span className="font-bold">
-                LOG IN
-              </span>
+              <span className="font-bold">LOG IN</span>
             </button>
 
             {/* Mobile Menu Button */}
@@ -109,17 +100,13 @@ const Navbar = () => {
               to={item.link}
               className={({ isActive }) =>
                 `flex h-full flex-1 flex-col items-center justify-center gap-1 transition-all duration-200 ${
-                  isActive
-                    ? "border-b-2 border-red-700 text-red-700"
-                    : ""
+                  isActive ? "border-b-2 border-red-700 text-red-700" : ""
                 }`
               }
             >
               <Icon className="text-xl" />
 
-              <span className="text-xs font-medium">
-                {item.name}
-              </span>
+              <span className="text-xs font-medium">{item.name}</span>
             </NavLink>
           );
         })}

@@ -25,9 +25,7 @@ const WeeklyWeatherForeCast = () => {
       return <WiFog className="text-4xl" />;
     }
 
-    if (
-      [51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)
-    ) {
+    if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) {
       return <WiRain className="text-4xl" />;
     }
 
@@ -51,9 +49,7 @@ const WeeklyWeatherForeCast = () => {
             className="flex items-center justify-between rounded-xl border border-white/10 bg-white/10 px-4 py-3 transition-all duration-200 hover:bg-white/15"
           >
             <div className="flex items-center gap-4">
-              {getWeatherIcon(
-                weather.daily.weather_code[index]
-              )}
+              {getWeatherIcon(weather.daily.weather_code[index])}
 
               <span className="font-medium text-lg">
                 {index === 0
@@ -66,17 +62,11 @@ const WeeklyWeatherForeCast = () => {
 
             <div className="flex items-center gap-3">
               <span className="font-bold text-lg">
-                {Math.round(
-                  weather.daily.temperature_2m_max[index]
-                )}
-                °
+                {Math.round(weather.daily.temperature_2m_max[index])}°
               </span>
 
               <span className="text-gray-400">
-                {Math.round(
-                  weather.daily.temperature_2m_min[index]
-                )}
-                °
+                {Math.round(weather.daily.temperature_2m_min[index])}°
               </span>
             </div>
           </div>

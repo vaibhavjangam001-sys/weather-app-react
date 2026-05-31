@@ -1,0 +1,57 @@
+import {
+  FETCH_NEWS_PENDING,
+  FETCH_NEWS_ERROR,
+  FETCH_NEWS_SUCCESS,
+} from "../constants/newsConstants";
+
+import { newsAxios } from "../../services/axiosInstance";
+
+export const fetchNewsPending = () => {
+  return {
+    type: FETCH_NEWS_PENDING,
+  };
+};
+
+export const fetchNewsError = (error) => {
+  return {
+    type: FETCH_NEWS_ERROR,
+    payload: error,
+  };
+};
+
+export const fetchNewsSuccess = (data) => {
+  return {
+    type: FETCH_NEWS_SUCCESS,
+    payload: data,
+  };
+};
+
+export const fetchNews = (category = "", search = "") => {
+  return async (dispatch) => {
+    dispatch(fetchNewsPending());
+
+    try {
+      const params = {
+        apikey: import.meta.env.VITE_NEWS_API_KEY,
+        country: "in",
+        language: "en",
+      };
+
+      if (category) {
+        params.category = category;
+      }
+
+      if (search.trim()) {
+        params.q = search.trim();
+      }
+
+      const response = await newsAxios.get("", {
+        params,
+      });
+
+      dispatch(fetchNewsSuccess(response.data.results));
+    } catch (error) {
+      dispatch(fetchNewsError(error.message));
+    }
+  };
+};

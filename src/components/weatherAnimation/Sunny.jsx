@@ -6,10 +6,7 @@ const Lottie = LottieModule.default;
 const Sunny = () => {
   return (
     <div className="h-48 w-48">
-      <Lottie
-        animationData={sunnyAnimation}
-        loop={true}
-      />
+      <Lottie animationData={sunnyAnimation} loop={true} />
     </div>
   );
 };

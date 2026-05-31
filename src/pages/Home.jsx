@@ -6,7 +6,7 @@ import Weatherhighlight from "../components/weatherCards/Weatherhighlight";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchWeather } from "../redux/actions/weatherAction";
-import Loading from "../components/weatherAnimation/Loading"
+import Loading from "../components/weatherAnimation/Loading";
 
 const Home = () => {
   const [searchCity, setSearchCity] = useState("");
@@ -24,26 +24,28 @@ const Home = () => {
     <section
       className={`min-h-[calc(100vh-8rem)] flex  sm:min-h-[calc(100vh-4rem)] p-4 flex-col`}
     >
-      <div className="h-12 flex justify-end items-center px-4 lg:px-28 w-full">
-        <input
-          value={searchCity}
-          onChange={(e) => setSearchCity(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && searchCity.trim()) {
-              dispatch(fetchWeather(searchCity));
-            }
-          }}
-          placeholder="Search City"
-          className=" bg-black h-8 p-4 rounded-bl-2xl font-bold rounded-tl-2xl w-full  lg:w-1/3 outline-none transition-all duration-200 focus:border-blue-400 "
-          type="search"
-        />
-        <div>
-          <button
-            onClick={() => dispatch(fetchWeather(searchCity))}
-            className="bg-gray-400 flex border-l-2 justify-center rounded-tr-2xl  rounded-br-2xl items-center h-8 w-12 p-2"
-          >
-            <IoMdSearch />
-          </button>
+      <div className="h-12 flex justify-center items-center lg:px-28  border-b w-full">
+        <div className="flex flex-1 mb-3">
+          <input
+            value={searchCity}
+            onChange={(e) => setSearchCity(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && searchCity.trim()) {
+                dispatch(fetchWeather(searchCity));
+              }
+            }}
+            placeholder="Search City"
+            className="bg-black h-10 px-4 rounded-l-2xl w-full outline-none font-bold"
+            type="search"
+          />
+          <div>
+            <button
+              onClick={() => dispatch(fetchWeather(searchCity))}
+              className="bg-gray-400 border-l-2 flex justify-center items-center h-10 w-12 rounded-r-2xl"
+            >
+              <IoMdSearch />
+            </button>
+          </div>
         </div>
       </div>
       <div
@@ -51,7 +53,7 @@ const Home = () => {
       >
         {/* Weather Card */}
         {isLoading ? (
-          <Loading/>
+          <Loading />
         ) : (
           <>
             <CurrentWeather />

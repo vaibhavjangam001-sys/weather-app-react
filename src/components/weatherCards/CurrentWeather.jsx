@@ -9,7 +9,6 @@ const CurrentWeather = () => {
     return null;
   }
 
-
   const currentDate = new Date().toLocaleString("en-IN", {
     weekday: "short",
     day: "numeric",

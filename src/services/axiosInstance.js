@@ -10,4 +10,9 @@ const geoAxios = axios.create({
   timeout: 5000,
 });
 
-export { weatherAxios, geoAxios };
+const newsAxios = axios.create({
+  baseURL: "https://newsdata.io/api/1/latest",
+  timeout: 5000,
+});
+
+export { weatherAxios, geoAxios, newsAxios };
