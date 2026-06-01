@@ -22,7 +22,7 @@ const News = () => {
   };
 
   const newsCategories = [
-    {
+    { 
       id: 1,
       name: "top",
       activeColor: "bg-sky-500 text-white",

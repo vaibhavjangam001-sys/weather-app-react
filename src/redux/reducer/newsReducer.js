@@ -1,4 +1,3 @@
-import { act } from "react";
 import {
   FETCH_NEWS_ERROR,
   FETCH_NEWS_PENDING,
