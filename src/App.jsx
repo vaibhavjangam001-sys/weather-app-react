@@ -1,6 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { restoreSession } from "./redux/actions/authenticationAction";
 
 import Home from "./pages/Home";
 import News from "./pages/News";
@@ -8,8 +11,16 @@ import Sport from "./pages/Sport";
 import Setting from "./pages/Setting";
 import MainLayout from "./layouts/MainLayout";
 import LoginSection from "./pages/LoginSection";
+import Profile from "./pages/Profile";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(restoreSession());
+  }, [dispatch]);
+
+
   return (
     <>
       <MainLayout>
@@ -19,14 +30,11 @@ function App() {
           <Route path="/sport" element={<Sport />} />
           <Route path="/setting" element={<Setting />} />
           <Route path="/login" element={<LoginSection />} />
+          <Route path="/profile" element={<Profile/>}/>
         </Routes>
       </MainLayout>
 
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        theme="dark"
-      />
+      <ToastContainer position="top-right" autoClose={3000} theme="dark" />
     </>
   );
 }
