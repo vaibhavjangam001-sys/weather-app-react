@@ -7,7 +7,9 @@ import {
   AUTH_SIGNUP_SUCCESS,
   AUTH_LOGOUT,
   AUTH_RESTORE_SESSION,
+  AUTH_CHECK_COMPLETE,
 } from "../constants/authenticationConstants";
+
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
@@ -113,7 +115,13 @@ export const logoutUser = () => {
 export const restoreSession = () => {
   return async (dispatch) => {
     onAuthStateChanged(auth, async (user) => {
-      if (!user) return;
+      if (!user) {
+        dispatch({
+          type: AUTH_CHECK_COMPLETE,
+        });
+
+        return;
+      }
 
       const snapshot = await get(ref(db, `users/${user.uid}`));
 

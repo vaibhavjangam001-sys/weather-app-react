@@ -4,7 +4,8 @@ import { IoHomeOutline } from "react-icons/io5";
 import { FaRegNewspaper } from "react-icons/fa";
 import { MdOutlineSettings } from "react-icons/md";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutUser } from "../redux/actions/authenticationAction";
 
 const NAV_LINKS = [
   {
@@ -27,12 +28,11 @@ const NAV_LINKS = [
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
-  const authData = useSelector(
-    (state) => state.authenticationReducer
-  );
+  const authData = useSelector((state) => state.authenticationReducer);
 
-  const { isAuthenticated } = authData;
+  const { isAuthenticated, isAuthChecked, usersData } = authData;
 
   const isLoginPage = location.pathname === "/login";
 
@@ -61,22 +61,20 @@ const Navbar = () => {
                 to={item.link}
                 className={({ isActive }) =>
                   `flex flex-1 items-center justify-center px-2 font-semibold transition-all duration-100 hover:border-b-2 hover:text-white ${
-                    isActive
-                      ? "border-b-2 border-white"
-                      : "text-gray-400"
+                    isActive ? "border-b-2 border-white" : "text-gray-400"
                   }`
                 }
               >
-                <span className="text-lg lg:text-xl">
-                  {item.name}
-                </span>
+                <span className="text-lg lg:text-xl">{item.name}</span>
               </NavLink>
             ))}
           </div>
 
           {/* Actions */}
           <div className="flex flex-1 items-center justify-end gap-3">
-            {!isAuthenticated ? (
+            {!isAuthChecked ? (
+              <div className="h-10 w-28 animate-pulse rounded-lg bg-slate-700" />
+            ) : !isAuthenticated ? (
               <button
                 type="button"
                 onClick={() => navigate("/login")}
@@ -87,12 +85,24 @@ const Navbar = () => {
               </button>
             ) : (
               <>
-                <div onClick={()=>navigate("/profile")} className="flex cursor-pointer  hover:bg-white/20 items-center gap-2 rounded-lg border border-white/10 px-3 py-2">
+                <div
+                  onClick={() => navigate("/profile")}
+                  className="flex items-center gap-2 rounded-lg border hover:bg-white/20 cursor-pointer border-white/10 px-3 py-2"
+                >
                   <BsPersonFill className="text-lg" />
-                  <span className="font-semibold">
-                    {authData?.usersData?.username}
-                  </span>
+                  <span className="font-semibold">{usersData?.username}</span>
                 </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    dispatch(logoutUser());
+                    window.location.reload();
+                  }}
+                  className="cursor-pointer rounded-lg border border-red-500 px-4 py-2 text-sm font-semibold transition-all duration-200 hover:bg-red-500"
+                >
+                  Logout
+                </button>
               </>
             )}
           </div>
@@ -110,16 +120,12 @@ const Navbar = () => {
               to={item.link}
               className={({ isActive }) =>
                 `flex h-full flex-1 flex-col items-center justify-center gap-1 transition-all duration-200 ${
-                  isActive
-                    ? "border-b-2 border-red-700 text-red-700"
-                    : ""
+                  isActive ? "border-b-2 border-red-700 text-red-700" : ""
                 }`
               }
             >
               <Icon className="text-xl" />
-              <span className="text-xs font-medium">
-                {item.name}
-              </span>
+              <span className="text-xs font-medium">{item.name}</span>
             </NavLink>
           );
         })}

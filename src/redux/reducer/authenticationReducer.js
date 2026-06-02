@@ -3,10 +3,11 @@ import {
   AUTH_LOGIN_SUCCESS,
   AUTH_LOGIN_PENDING,
   AUTH_SIGNUP_PENDING,
-  AUTH_SIGNUP_ERROR,
   AUTH_SIGNUP_SUCCESS,
+  AUTH_SIGNUP_ERROR,
   AUTH_LOGOUT,
   AUTH_RESTORE_SESSION,
+  AUTH_CHECK_COMPLETE,
 } from "../constants/authenticationConstants";
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
     language: "en",
   },
 
+  isAuthChecked: false,
   isAuthenticated: false,
   isLoading: false,
   error: null,
@@ -74,8 +76,15 @@ export const authenticationReducer = (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: true,
+        isAuthChecked: true,
         usersData: action.payload.user,
         preferences: action.payload.preferences,
+      };
+
+    case AUTH_CHECK_COMPLETE:
+      return {
+        ...state,
+        isAuthChecked: true,
       };
 
     default:
