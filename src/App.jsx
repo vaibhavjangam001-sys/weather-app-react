@@ -12,7 +12,6 @@ import Setting from "./pages/Setting";
 import MainLayout from "./layouts/MainLayout";
 import LoginSection from "./pages/LoginSection";
 import Profile from "./pages/Profile";
-import ProtectedRoute from "./components/ProtectedRoutes/ProtectedRoute";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,23 +27,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/news" element={<News />} />
           <Route path="/sport" element={<Sport />} />
-          <Route
-            path="/setting"
-            element={
-              <ProtectedRoute>
-                <Setting />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/setting" element={<Setting />} />
           <Route path="/login" element={<LoginSection />} />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </MainLayout>
 
