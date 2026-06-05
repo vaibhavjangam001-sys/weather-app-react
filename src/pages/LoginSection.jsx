@@ -4,7 +4,7 @@ import Storm from "../components/weatherAnimation/Storm";
 
 import Login from "../components/LoginPage/Login";
 import Signup from "../components/LoginPage/Signup";
-import SocailMediaLog from "../components/LoginPage/SocailMediaLog";
+
 
 const LoginSection = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -52,7 +52,7 @@ const LoginSection = () => {
       {isLogin ? <Login /> : <Signup />}
 
       {/* Social media login session */}
-      <SocailMediaLog />
+    
     </section>
   );
 };

@@ -8,6 +8,10 @@ import {
   AUTH_LOGOUT,
   AUTH_RESTORE_SESSION,
   AUTH_CHECK_COMPLETE,
+  AUTH_UPDATE_PREFERENCES,
+  AUTH_RESET_PASSWORD_PENDING,
+  AUTH_RESET_PASSWORD_SUCCESS,
+  AUTH_RESET_PASSWORD_ERROR,
 } from "../constants/authenticationConstants";
 
 const initialState = {
@@ -37,10 +41,10 @@ export const authenticationReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         isAuthenticated: true,
+        isAuthChecked: true,
         usersData: action.payload.user,
         preferences: action.payload.preferences,
       };
-
     case AUTH_LOGIN_ERROR:
       return {
         ...state,
@@ -85,6 +89,31 @@ export const authenticationReducer = (state = initialState, action) => {
       return {
         ...state,
         isAuthChecked: true,
+      };
+
+    case AUTH_UPDATE_PREFERENCES:
+      return {
+        ...state,
+        preferences: action.payload,
+      };
+    case AUTH_RESET_PASSWORD_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+      };
+
+    case AUTH_RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+      };
+
+    case AUTH_RESET_PASSWORD_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
       };
 
     default:

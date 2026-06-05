@@ -8,12 +8,17 @@ import {
   AUTH_LOGOUT,
   AUTH_RESTORE_SESSION,
   AUTH_CHECK_COMPLETE,
+  AUTH_UPDATE_PREFERENCES,
+  AUTH_RESET_PASSWORD_PENDING,
+  AUTH_RESET_PASSWORD_SUCCESS,
+  AUTH_RESET_PASSWORD_ERROR,
 } from "../constants/authenticationConstants";
 
+import { sendPasswordResetEmail } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
-import { set, ref } from "firebase/database";
+import { set, ref, update } from "firebase/database";
 import { db } from "../../firebase/firebase";
 import { get } from "firebase/database";
 import { onAuthStateChanged } from "firebase/auth";
@@ -139,5 +144,59 @@ export const restoreSession = () => {
         },
       });
     });
+  };
+};
+
+export const updatePreferences = (uid, theme, language) => {
+  return async (dispatch) => {
+    try {
+      await update(ref(db, `users/${uid}`), {
+        preferences: {
+          theme,
+          language,
+        },
+      });
+
+      dispatch({
+        type: AUTH_UPDATE_PREFERENCES,
+        payload: {
+          theme,
+          language,
+        },
+      });
+
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+};
+
+export const resetPassword = (email) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: AUTH_RESET_PASSWORD_PENDING,
+      });
+
+      await sendPasswordResetEmail(auth, email);
+
+      dispatch({
+        type: AUTH_RESET_PASSWORD_SUCCESS,
+      });
+
+      return true;
+    } catch (error) {
+      console.log("RESET ERROR:", error.code);
+      console.log("RESET MESSAGE:", error.message);
+
+      dispatch({
+        type: AUTH_RESET_PASSWORD_ERROR,
+        payload: error.code,
+      });
+
+      return false;
+    }
   };
 };

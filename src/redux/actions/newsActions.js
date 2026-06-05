@@ -5,6 +5,7 @@ import {
 } from "../constants/newsConstants";
 
 import { newsAxios } from "../../services/axiosInstance";
+import { useSelector } from "react-redux";
 
 export const fetchNewsPending = () => {
   return {
@@ -27,14 +28,19 @@ export const fetchNewsSuccess = (data) => {
 };
 
 export const fetchNews = (category = "", search = "") => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     dispatch(fetchNewsPending());
+
+    const { preferences } =
+      getState().authenticationReducer;
+
+    const language = preferences?.language || "en";
 
     try {
       const params = {
         apikey: import.meta.env.VITE_NEWS_API_KEY,
         country: "in",
-        language: "en",
+        language,
       };
 
       if (category) {

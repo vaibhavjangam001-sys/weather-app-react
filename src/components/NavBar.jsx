@@ -90,15 +90,17 @@ const Navbar = () => {
                   className="flex items-center gap-2 rounded-lg border hover:bg-white/20 cursor-pointer border-white/10 px-3 py-2"
                 >
                   <BsPersonFill className="text-lg" />
-                  <span className="hidden sm:block font-semibold">{usersData?.username}</span>
+                  <span className="hidden sm:block font-semibold">
+                    {usersData?.username}
+                  </span>
                 </div>
 
                 <button
                   type="button"
-                  onClick={() => {
-                    dispatch(logoutUser());
+                  onClick={async () => {
+                    await dispatch(logoutUser());
+                    navigate("/");
                     window.location.reload();
-                    navigate("/")
                   }}
                   className="cursor-pointer rounded-lg border border-red-500 px-4 py-2 text-sm font-semibold transition-all duration-200 hover:bg-red-500"
                 >

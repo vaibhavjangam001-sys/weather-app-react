@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../redux/actions/authenticationAction";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { resetPassword } from "../../redux/actions/authenticationAction";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -60,6 +61,22 @@ const Login = () => {
     dispatch(loginUser(formData.email, formData.password));
   };
 
+  const handleForgotPassword = async () => {
+    if (!formData.email) {
+      toast.error("Please enter your email");
+      return;
+    }
+
+    const success = await dispatch(resetPassword(formData.email));
+    console.log("success =", success);
+
+    if (success) {
+      toast.success("Password reset email sent");
+    } else {
+      toast.error("Failed to send reset email");
+    }
+  };
+
   return (
     <div className="flex w-full max-w-md flex-col gap-4 rounded-xl p-2">
       {/* Email Input */}
@@ -92,12 +109,13 @@ const Login = () => {
         />
 
         <div className="mt-2 flex items-center justify-end">
-          <a
-            className="text-sm text-blue-500 hover:underline sm:text-base"
-            href="#"
+          <button
+            type="button"
+            onClick={handleForgotPassword}
+            className="text-sm text-blue-500 hover:underline"
           >
             Forget password ?
-          </a>
+          </button>
         </div>
       </div>
 

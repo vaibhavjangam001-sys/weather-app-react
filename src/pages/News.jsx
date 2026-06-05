@@ -18,7 +18,7 @@ const News = () => {
   }, [dispatch, category]);
 
   const handleSearch = () => {
-    dispatch(fetchNews(category, search));
+    // dispatch(fetchNews(category, search));
   };
 
   const newsCategories = [
