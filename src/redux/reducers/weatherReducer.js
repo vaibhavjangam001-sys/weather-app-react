@@ -3,7 +3,7 @@ import {
   FETCH_WEATHER_PENDING,
   FETCH_WEATHER_SUCCESS,
   SET_CITY,
-} from "../constants/weatherConstants";
+} from "../types/weatherConstants";
 
 const initialState = {
   city: "aurangabad",

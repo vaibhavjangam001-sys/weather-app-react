@@ -2,7 +2,7 @@ import {
   FETCH_NEWS_PENDING,
   FETCH_NEWS_ERROR,
   FETCH_NEWS_SUCCESS,
-} from "../constants/newsConstants";
+} from "../types/newsConstants";
 
 import { newsAxios } from "../../services/axiosInstance";
 import { useSelector } from "react-redux";

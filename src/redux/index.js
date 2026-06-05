@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
-import { weatherReducer } from "./reducer/weatherReducer";
-import { newsReducer } from "./reducer/newsReducer";
-import { authenticationReducer } from "./reducer/authenticationReducer";
+import { weatherReducer } from "./reducers/weatherReducer";
+import { newsReducer } from "./reducers/newsReducer";
+import { authenticationReducer } from "./reducers/authenticationReducer"
 
 const rootReducer = combineReducers({
   weatherReducer,

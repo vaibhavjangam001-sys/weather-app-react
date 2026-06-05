@@ -2,8 +2,31 @@ import { useEffect, useState } from "react";
 import { IoMdSearch } from "react-icons/io";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchNews } from "../redux/actions/newsActions";
-import NewsCard from "../components/newsCards/NewsCard";
-import Loading from "../components/weatherAnimation/Loading";
+import NewsCard from "../components/news/NewsCard";
+import Loading from "../components/animation/Loading";
+
+const getCategoryNames = (language) => {
+  const categories = {
+    en: {
+      top: "Top",
+      entertainment: "Entertainment",
+      sports: "Sports",
+      health: "Health",
+      science: "Science",
+      technology: "Technology",
+    },
+  };
+  return categories[language] || categories.en;
+};
+
+const NEWS_CATEGORIES_BASE = [
+  { id: 1, name: "top", activeColor: "bg-sky-500 text-white", inactiveColor: "bg-sky-100 text-sky-700 border border-sky-200" },
+  { id: 2, name: "entertainment", activeColor: "bg-pink-500 text-white", inactiveColor: "bg-pink-100 text-pink-700 border border-pink-200" },
+  { id: 3, name: "sports", activeColor: "bg-green-500 text-white", inactiveColor: "bg-green-100 text-green-700 border border-green-200" },
+  { id: 4, name: "health", activeColor: "bg-red-500 text-white", inactiveColor: "bg-red-100 text-red-700 border border-red-200" },
+  { id: 5, name: "science", activeColor: "bg-violet-500 text-white", inactiveColor: "bg-violet-100 text-violet-700 border border-violet-200" },
+  { id: 6, name: "technology", activeColor: "bg-cyan-500 text-white", inactiveColor: "bg-cyan-100 text-cyan-700 border border-cyan-200" },
+];
 
 const News = () => {
   const [search, setSearch] = useState("");
@@ -11,118 +34,96 @@ const News = () => {
 
   const dispatch = useDispatch();
 
-  const { news, isLoading, error } = useSelector((state) => state.newsReducer);
+  const { news, isLoading, error } = useSelector(
+    (state) => state.newsReducer,
+  );
+
+  const isDark = useSelector(
+    (state) => state.authenticationReducer.preferences?.theme === "dark",
+  );
+  
+  const language = useSelector(
+    (state) => state.authenticationReducer.preferences?.language || "en",
+  );
+
+  const categoryNames = getCategoryNames(language);
+
+  const NEWS_CATEGORIES = NEWS_CATEGORIES_BASE.map(cat => ({
+    ...cat,
+    displayName: categoryNames[cat.name],
+  }));
 
   useEffect(() => {
-    // dispatch(fetchNews(category));
+    dispatch(fetchNews(category));
   }, [dispatch, category]);
 
   const handleSearch = () => {
-    // dispatch(fetchNews(category, search));
+    dispatch(fetchNews(category, search));
   };
 
-  const newsCategories = [
-    { 
-      id: 1,
-      name: "top",
-      activeColor: "bg-sky-500 text-white",
-      inactiveColor: "bg-sky-500/20 text-sky-400 border border-sky-500/30",
-    },
-    {
-      id: 2,
-      name: "entertainment",
-      activeColor: "bg-pink-500 text-white",
-      inactiveColor: "bg-pink-500/20 text-pink-400 border border-pink-500/30",
-    },
-    {
-      id: 3,
-      name: "sports",
-      activeColor: "bg-green-500 text-white",
-      inactiveColor:
-        "bg-green-500/20 text-green-400 border border-green-500/30",
-    },
-    {
-      id: 4,
-      name: "health",
-      activeColor: "bg-red-500 text-white",
-      inactiveColor: "bg-red-500/20 text-red-400 border border-red-500/30",
-    },
-    {
-      id: 5,
-      name: "science",
-      activeColor: "bg-violet-500 text-white",
-      inactiveColor:
-        "bg-violet-500/20 text-violet-400 border border-violet-500/30",
-    },
-    {
-      id: 6,
-      name: "technology",
-      activeColor: "bg-cyan-500 text-white",
-      inactiveColor: "bg-cyan-500/20 text-cyan-400 border border-cyan-500/30",
-    },
-  ];
-
   return (
-    <section className="min-h-[calc(100vh-8rem)] sm:min-h-[calc(100vh-4rem)] p-4 flex flex-col">
-      {/* Header */}
-      <div className="h-auto flex flex-col lg:flex-row justify-end items-center border-b py-3 px-4 lg:px-18 w-full gap-8">
-        {/* Categories */}
-        <div className="flex-1 flex flex-wrap gap-4 px-4 items-center">
-          {newsCategories.map((item) => (
+    <section className="flex min-h-[calc(100vh-8rem)] flex-col p-4 sm:min-h-[calc(100vh-4rem)]">
+      <div
+        className={`flex h-auto flex-col items-center justify-end gap-8 border-b py-3 px-4 lg:flex-row lg:px-18 ${
+          isDark ? "border-slate-700" : "border-slate-200"
+        }`}
+      >
+        <div className="flex flex-1 flex-wrap items-center gap-4 px-4">
+          {NEWS_CATEGORIES.map((item) => (
             <button
               key={item.id}
               onClick={() => setCategory(item.name)}
-              className={`p-2 flex-1 font-bold rounded-sm flex justify-center items-center backdrop-blur-md cursor-pointer transition-all duration-300 hover:bg-white/20
-              ${
+              className={`flex flex-1 cursor-pointer items-center justify-center rounded-md p-2 font-bold transition-all duration-300 hover:scale-105 ${
                 category === item.name ? item.activeColor : item.inactiveColor
               }`}
             >
-              {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
+              {item.displayName}
             </button>
           ))}
         </div>
 
-        {/* Search */}
-        <div className="lg:w-[30%] w-full flex items-center">
+        <div className="flex w-full items-center lg:w-[30%]">
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search news..."
-            className="bg-black h-10 px-4 rounded-l-2xl w-full outline-none font-bold"
             type="search"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 handleSearch();
               }
             }}
+            className={`h-10 w-full rounded-l-2xl border px-4 font-medium outline-none focus:border-sky-500 ${
+              isDark
+                ? "border-slate-700 bg-slate-800 text-white placeholder:text-slate-400"
+                : "border-slate-300 bg-white text-slate-900 placeholder:text-slate-500"
+            }`}
           />
 
           <button
             onClick={handleSearch}
-            className="bg-gray-400 border-l-2 flex justify-center items-center h-10 w-12 rounded-r-2xl"
+            className={`flex h-10 w-12 items-center justify-center rounded-r-2xl border border-l-0 transition-all duration-200 ${
+              isDark
+                ? "border-slate-700 bg-slate-800 text-white hover:bg-slate-700"
+                : "border-slate-300 bg-slate-100 text-slate-900 hover:bg-slate-200"
+            }`}
           >
             <IoMdSearch />
           </button>
         </div>
       </div>
 
-      {/* Loading */}
-      {isLoading && (
-        <div className="flex items-center justify-center">
-          {" "}
-          <Loading />
-        </div>
-      )}
+      {isLoading && <Loading />}
 
-      {/* Error */}
       {error && (
-        <h1 className="text-center mt-10 text-red-500 font-bold">{error}</h1>
+        <h1 className="mt-10 text-center font-bold text-red-500">
+          {error}
+        </h1>
       )}
 
-      {/* News Grid */}
       <div className="grid grid-cols-1 gap-6 px-4 py-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:px-20">
         {news?.map((item, index) => (
-          <NewsCard key={index} item={item} />
+          <NewsCard key={index} item={item} language={language} />
         ))}
       </div>
     </section>

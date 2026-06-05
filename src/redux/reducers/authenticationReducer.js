@@ -12,18 +12,18 @@ import {
   AUTH_RESET_PASSWORD_PENDING,
   AUTH_RESET_PASSWORD_SUCCESS,
   AUTH_RESET_PASSWORD_ERROR,
-} from "../constants/authenticationConstants";
+} from "../types/authenticationConstants";
 
 const initialState = {
   usersData: null,
   preferences: {
-    theme: "light",
-    language: "en",
+    theme: localStorage.getItem("theme") || "light",
+    language: localStorage.getItem("language") || "en",
   },
-
   isAuthChecked: false,
   isAuthenticated: false,
   isLoading: false,
+  isSignupSuccess: false,
   error: null,
 };
 
@@ -37,14 +37,19 @@ export const authenticationReducer = (state = initialState, action) => {
       };
 
     case AUTH_LOGIN_SUCCESS:
+      localStorage.setItem("theme", action.payload.preferences?.theme || "light");
+      localStorage.setItem("language", action.payload.preferences?.language || "en");
+
       return {
         ...state,
         isLoading: false,
         isAuthenticated: true,
         isAuthChecked: true,
+        isSignupSuccess: false,
         usersData: action.payload.user,
         preferences: action.payload.preferences,
       };
+
     case AUTH_LOGIN_ERROR:
       return {
         ...state,
@@ -56,6 +61,7 @@ export const authenticationReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: true,
+        isSignupSuccess: false,
         error: null,
       };
 
@@ -63,6 +69,8 @@ export const authenticationReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
+        isSignupSuccess: true,
+        error: null,
       };
 
     case AUTH_SIGNUP_ERROR:
@@ -71,12 +79,16 @@ export const authenticationReducer = (state = initialState, action) => {
         isLoading: false,
         error: action.payload,
       };
+
     case AUTH_LOGOUT:
       return {
         ...initialState,
       };
 
     case AUTH_RESTORE_SESSION:
+      localStorage.setItem("theme", action.payload.preferences?.theme || "light");
+      localStorage.setItem("language", action.payload.preferences?.language || "en");
+
       return {
         ...state,
         isAuthenticated: true,
@@ -92,10 +104,14 @@ export const authenticationReducer = (state = initialState, action) => {
       };
 
     case AUTH_UPDATE_PREFERENCES:
+      localStorage.setItem("theme", action.payload.theme);
+      localStorage.setItem("language", action.payload.language);
+
       return {
         ...state,
         preferences: action.payload,
       };
+
     case AUTH_RESET_PASSWORD_PENDING:
       return {
         ...state,

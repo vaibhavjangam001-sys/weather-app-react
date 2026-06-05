@@ -1,7 +1,7 @@
-import Sunny from "../components/weatherAnimation/Sunny";
-import Cloudy from "../components/weatherAnimation/Cloudy";
-import Rain from "../components/weatherAnimation/Rain";
-import Storm from "../components/weatherAnimation/Storm";
+import Sunny from "../components/animation/Sunny";
+import Cloudy from "../components/animation/Cloudy";
+import Rain from "../components/animation/Rain";
+import Storm from "../components/animation/Storm";
 
 export const getWeatherAnimation = (code) => {
   if (code === 0) {

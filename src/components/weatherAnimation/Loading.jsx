@@ -6,7 +6,7 @@ const Loading = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center">
-      <div className="w-96 h-96">
+      <div className="h-96 w-96">
         <Lottie animationData={loadingAnimation} loop />
       </div>
     </div>

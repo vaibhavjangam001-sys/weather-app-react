@@ -3,53 +3,81 @@ import { IoIosMail } from "react-icons/io";
 import { BsPersonFill } from "react-icons/bs";
 
 const Profile = () => {
-  const usersData = useSelector(
-    (state) => state.authenticationReducer.usersData,
+  const { usersData, preferences } = useSelector(
+    (state) => state.authenticationReducer,
   );
 
+  const isDark = preferences?.theme === "dark";
+
   const username = usersData?.username
-    ? usersData.username.charAt(0).toUpperCase() + usersData.username.slice(1)
+    ? usersData.username.charAt(0).toUpperCase() +
+      usersData.username.slice(1)
     : "N/A";
 
   const email = usersData?.email || "N/A";
-
   const uid = usersData?.uid || "N/A";
 
+  const containerClass = isDark
+    ? "border-slate-700 bg-slate-800 text-white"
+    : "border-slate-200 bg-white text-slate-900";
+
+  const innerClass = isDark
+    ? "border-slate-700 bg-slate-900"
+    : "border-slate-200 bg-slate-50";
+
   return (
-    <div className="min-h-[calc(100vh-8rem)] sm:min-h-[calc(100vh-4rem)] p-4 flex justify-center items-center">
-      <div className="w-full max-w-4xl flex flex-col gap-4">
-        {/* User ID */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 p-3 rounded-lg bg-white/20">
-          <div className="w-full sm:w-32 flex flex-col items-center justify-center bg-white/30 p-3 rounded-lg">
+    <div className="flex min-h-[calc(100vh-8rem)] items-center justify-center p-4 sm:min-h-[calc(100vh-4rem)]">
+      <div className="flex w-full max-w-4xl flex-col gap-4">
+        {/* Account ID */}
+        <div
+          className={`flex flex-col items-center gap-4 rounded-lg border p-3 shadow-sm sm:flex-row ${containerClass}`}
+        >
+          <div
+            className={`flex w-full flex-col items-center justify-center rounded-lg border p-3 sm:w-32 ${innerClass}`}
+          >
             <BsPersonFill className="text-3xl" />
-            <p className="font-semibold">User ID</p>
+            <p className="font-semibold">Account ID</p>
           </div>
 
-          <div className="flex-1 w-full text-center font-bold text-sm sm:text-lg p-5 rounded-lg bg-white/30 break-all">
+          <div
+            className={`w-full flex-1 break-all rounded-lg border p-5 text-center text-sm font-bold sm:text-lg ${innerClass}`}
+          >
             {uid}
           </div>
         </div>
 
         {/* Username */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 p-3 rounded-lg bg-white/20">
-          <div className="w-full sm:w-32 flex flex-col items-center justify-center bg-white/30 p-3 rounded-lg">
+        <div
+          className={`flex flex-col items-center gap-4 rounded-lg border p-3 shadow-sm sm:flex-row ${containerClass}`}
+        >
+          <div
+            className={`flex w-full flex-col items-center justify-center rounded-lg border p-3 sm:w-32 ${innerClass}`}
+          >
             <BsPersonFill className="text-3xl" />
             <p className="font-semibold">Username</p>
           </div>
 
-          <div className="flex-1 w-full text-center font-bold text-lg sm:text-2xl p-5 rounded-lg bg-white/30 break-words">
+          <div
+            className={`w-full flex-1 break-words rounded-lg border p-5 text-center text-lg font-bold sm:text-2xl ${innerClass}`}
+          >
             {username}
           </div>
         </div>
 
         {/* Email */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 p-3 rounded-lg bg-white/20">
-          <div className="w-full sm:w-32 flex flex-col items-center justify-center bg-white/30 p-3 rounded-lg">
+        <div
+          className={`flex flex-col items-center gap-4 rounded-lg border p-3 shadow-sm sm:flex-row ${containerClass}`}
+        >
+          <div
+            className={`flex w-full flex-col items-center justify-center rounded-lg border p-3 sm:w-32 ${innerClass}`}
+          >
             <IoIosMail className="text-3xl" />
             <p className="font-semibold">Email</p>
           </div>
 
-          <div className="flex-1 w-full text-center font-bold text-sm sm:text-xl p-5 rounded-lg bg-white/30 break-words">
+          <div
+            className={`w-full flex-1 break-words rounded-lg border p-5 text-center text-sm font-bold sm:text-xl ${innerClass}`}
+          >
             {email}
           </div>
         </div>
