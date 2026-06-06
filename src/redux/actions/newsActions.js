@@ -17,6 +17,7 @@ export const fetchNews = (category = "", search = "") => {
       const params = {
         country: "in",
         language,
+        apikey: import.meta.env.VITE_NEWS_API_KEY,
       };
 
       if (category) params.category = category;
