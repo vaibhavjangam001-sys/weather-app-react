@@ -13,7 +13,7 @@ const geoAxios = axios.create({
 });
 
 const newsAxios = axios.create({
-  baseURL: "https://newsdata.io/api/1/latest",
+  baseURL: "https://newsdata.io",
   timeout: API_TIMEOUT,
 });
 

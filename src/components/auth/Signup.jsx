@@ -1,30 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { signupUser } from "../../redux/actions/authenticationAction";
 import { toast } from "react-toastify";
 
 const Signup = ({ onSignupSuccess }) => {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
-  
-  const [toastShown, setToastShown] = useState(false);
+  const [formData, setFormData] = useState({ username: "", email: "", password: "" });
+  const toastShownRef = useRef(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { error, isLoading, isSignupSuccess, isAuthenticated, preferences } = useSelector(
-    (state) => state.authenticationReducer
-  );
+  const { error, isLoading, isSignupSuccess, isAuthenticated, preferences } =
+    useSelector((state) => state.authenticationReducer);
 
   const isDark = preferences?.theme === "dark";
 
   useEffect(() => {
     if (!error) return;
-
     switch (error) {
       case "auth/email-already-in-use":
         toast.error("Account already exists");
@@ -41,29 +34,23 @@ const Signup = ({ onSignupSuccess }) => {
   }, [error]);
 
   useEffect(() => {
-    if (isAuthenticated && isSignupSuccess && !toastShown) {
-      setToastShown(true);
-      toast.success("Account created successfully!");
-      
-      setTimeout(() => {
-        if (onSignupSuccess) {
-          onSignupSuccess();
-        } else {
-          navigate("/");
-        }
-      }, 1500);
-    }
-  }, [isAuthenticated, isSignupSuccess, navigate, onSignupSuccess, toastShown]);
+    if (!isAuthenticated || !isSignupSuccess || toastShownRef.current) return;
 
-  useEffect(() => {
-    if (isSignupSuccess) {
-      setFormData({ username: "", email: "", password: "" });
-    }
-  }, [isSignupSuccess]);
+    toastShownRef.current = true;
+    setFormData({ username: "", email: "", password: "" });
+    toast.success("Account created successfully!");
+
+    setTimeout(() => {
+      if (onSignupSuccess) {
+        onSignupSuccess();
+      } else {
+        navigate("/");
+      }
+    }, 1500);
+  }, [isAuthenticated, isSignupSuccess, navigate, onSignupSuccess]);
 
   const handleSignup = (e) => {
     e.preventDefault();
-
     const username = formData.username.trim();
     const email = formData.email.trim();
     const password = formData.password;
@@ -72,13 +59,12 @@ const Signup = ({ onSignupSuccess }) => {
       toast.error("Please fill in all fields");
       return;
     }
-
     if (password.length < 6) {
       toast.error("Password must be at least 6 characters");
       return;
     }
 
-    setToastShown(false);
+    toastShownRef.current = false;
     dispatch(signupUser(username, email, password));
   };
 
@@ -102,32 +88,23 @@ const Signup = ({ onSignupSuccess }) => {
           type="text"
           placeholder="Enter Username"
           value={formData.username}
-          onChange={(e) =>
-            setFormData((prev) => ({ ...prev, username: e.target.value }))
-          }
+          onChange={(e) => setFormData((prev) => ({ ...prev, username: e.target.value }))}
           className={inputStyle}
         />
-
         <input
           type="email"
           placeholder="Enter Email"
           value={formData.email}
-          onChange={(e) =>
-            setFormData((prev) => ({ ...prev, email: e.target.value }))
-          }
+          onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
           className={inputStyle}
         />
-
         <input
           type="password"
           placeholder="Enter Password"
           value={formData.password}
-          onChange={(e) =>
-            setFormData((prev) => ({ ...prev, password: e.target.value }))
-          }
+          onChange={(e) => setFormData((prev) => ({ ...prev, password: e.target.value }))}
           className={inputStyle}
         />
-
         <button
           type="submit"
           disabled={isLoading}

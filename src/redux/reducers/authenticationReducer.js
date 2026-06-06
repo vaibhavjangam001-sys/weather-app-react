@@ -39,7 +39,6 @@ export const authenticationReducer = (state = initialState, action) => {
     case AUTH_LOGIN_SUCCESS:
       localStorage.setItem("theme", action.payload.preferences?.theme || "light");
       localStorage.setItem("language", action.payload.preferences?.language || "en");
-
       return {
         ...state,
         isLoading: false,
@@ -83,12 +82,12 @@ export const authenticationReducer = (state = initialState, action) => {
     case AUTH_LOGOUT:
       return {
         ...initialState,
+        isAuthChecked: true,
       };
 
     case AUTH_RESTORE_SESSION:
       localStorage.setItem("theme", action.payload.preferences?.theme || "light");
       localStorage.setItem("language", action.payload.preferences?.language || "en");
-
       return {
         ...state,
         isAuthenticated: true,
@@ -106,7 +105,6 @@ export const authenticationReducer = (state = initialState, action) => {
     case AUTH_UPDATE_PREFERENCES:
       localStorage.setItem("theme", action.payload.theme);
       localStorage.setItem("language", action.payload.language);
-
       return {
         ...state,
         preferences: action.payload,

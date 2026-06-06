@@ -3,14 +3,14 @@ import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBQe7qGwhrL0vAFsZSroPQBLjqkayigu-w",
-  authDomain: "weather-app-994ae.firebaseapp.com",
-  projectId: "weather-app-994ae",
-  storageBucket: "weather-app-994ae.firebasestorage.app",
-  messagingSenderId: "119833653536",
-  appId: "1:119833653536:web:f182d0457d6c8141c72745",
-  measurementId: "G-1HJV6E12CP",
-  databaseURL: "https://weather-app-994ae-default-rtdb.firebaseio.com",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
 };
 
 const app = initializeApp(firebaseConfig);

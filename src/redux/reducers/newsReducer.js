@@ -11,26 +11,15 @@ const initialState = {
 };
 
 const newsReducer = (state = initialState, action) => {
-  if (action.type === FETCH_NEWS_PENDING) {
-    return {
-      ...state,
-      isLoading: true,
-      error: null,
-    };
-  } else if (action.type === FETCH_NEWS_ERROR) {
-    return {
-      ...state,
-      isLoading: false,
-      error: action.payload,
-    };
-  } else if (action.type === FETCH_NEWS_SUCCESS) {
-    return {
-      ...state,
-      isLoading: false,
-      news: action.payload,
-    };
-  } else {
-    return state;
+  switch (action.type) {
+    case FETCH_NEWS_PENDING:
+      return { ...state, isLoading: true, error: null };
+    case FETCH_NEWS_SUCCESS:
+      return { ...state, isLoading: false, news: action.payload };
+    case FETCH_NEWS_ERROR:
+      return { ...state, isLoading: false, error: action.payload };
+    default:
+      return state;
   }
 };
 

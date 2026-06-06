@@ -8,35 +8,29 @@ import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../redux/actions/authenticationAction";
 
 const NAV_LINKS = [
-  {
-    name: "Home",
-    link: "/",
-    icon: IoHomeOutline,
-  },
-  {
-    name: "News",
-    link: "/news",
-    icon: FaRegNewspaper,
-  },
-  {
-    name: "Settings",
-    link: "/setting",
-    icon: MdOutlineSettings,
-  },
+  { name: "Home",     link: "/",        icon: IoHomeOutline     },
+  { name: "News",     link: "/news",    icon: FaRegNewspaper    },
+  { name: "Settings", link: "/setting", icon: MdOutlineSettings },
 ];
+
+const capitalize = (str) => {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
 
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const {
-    isAuthenticated,
-    isAuthChecked,
-    usersData,
-    preferences,
-  } = useSelector((state) => state.authenticationReducer);
+  const { isAuthenticated, isAuthChecked, usersData, preferences } =
+    useSelector((state) => state.authenticationReducer);
 
   const isDark = preferences?.theme === "dark";
+
+  const handleLogout = async () => {
+    await dispatch(logoutUser());
+    navigate("/");
+  };
 
   return (
     <nav className="fixed top-0 left-0 z-50 w-full">
@@ -49,6 +43,7 @@ const Navbar = () => {
         }`}
       >
         <div className="flex h-full items-center justify-between px-4">
+
           {/* Logo */}
           <button
             type="button"
@@ -107,18 +102,13 @@ const Navbar = () => {
                 >
                   <BsPersonFill className="text-lg" />
                   <span className="hidden font-semibold sm:block">
-                    {usersData?.username.charAt(0).toUpperCase() +
-      usersData.username.slice(1)}
+                    {capitalize(usersData?.username)}
                   </span>
                 </div>
 
                 <button
                   type="button"
-                  onClick={async () => {
-                    await dispatch(logoutUser());
-                    navigate("/");
-                    window.location.reload();
-                  }}
+                  onClick={handleLogout}
                   className="cursor-pointer rounded-lg border border-red-500 px-4 py-2 text-sm font-semibold transition-all duration-200 hover:bg-red-500 hover:text-white"
                 >
                   Logout
@@ -139,7 +129,6 @@ const Navbar = () => {
       >
         {NAV_LINKS.map((item) => {
           const Icon = item.icon;
-
           return (
             <NavLink
               key={item.name}

@@ -20,8 +20,11 @@ function App() {
   }, [dispatch]);
 
   const { preferences } = useSelector((state) => state.authenticationReducer);
-
   const isDark = preferences?.theme === "dark";
+
+  const toastStyle = isDark
+    ? { background: "#1f2937", color: "#fff", border: "1px solid #374151" }
+    : { background: "#E2DFD2", color: "#000", border: "1px solid #d1cdbf" };
 
   return (
     <>
@@ -38,19 +41,7 @@ function App() {
       <ToastContainer
         position="top-right"
         autoClose={3000}
-        toastStyle={
-          isDark
-            ? {
-                background: "#1f2937",
-                color: "#fff",
-                border: "1px solid #374151",
-              }
-            : {
-                background: "#E2DFD2",
-                color: "#000",
-                border: "1px solid #d1cdbf",
-              }
-        }
+        toastStyle={toastStyle}
       />
     </>
   );

@@ -8,7 +8,7 @@ const MainLayout = ({ children }) => {
   const isLoginPage = location.pathname === "/login";
 
   const { preferences } = useSelector(
-    (state) => state.authenticationReducer,
+    (state) => state.authenticationReducer
   );
 
   const isDark = preferences?.theme === "dark";
@@ -27,7 +27,7 @@ const MainLayout = ({ children }) => {
         className={`${
           isLoginPage
             ? "min-h-screen"
-            : "min-h-[calc(100vh-8rem)] pt-32 sm:min-h-[calc(100vh-4rem)] sm:pt-16"
+            : "min-h-[calc(100vh-8rem)] pt-32 pb-16 sm:pb-0 sm:min-h-[calc(100vh-4rem)] sm:pt-16"
         }`}
       >
         {children}

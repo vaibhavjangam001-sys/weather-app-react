@@ -5,6 +5,5 @@ export const getWeatherCondition = (code) => {
   if (code <= 67) return "Rain";
   if (code <= 77) return "Snow";
   if (code <= 99) return "Thunderstorm";
-
   return "Unknown";
 };

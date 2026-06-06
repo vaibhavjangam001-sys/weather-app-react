@@ -29,7 +29,11 @@ export const loginUser = (email, password) => {
     try {
       dispatch({ type: AUTH_LOGIN_PENDING });
 
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
       const user = userCredential.user;
       const snapshot = await get(ref(db, `users/${user.uid}`));
       const userData = snapshot.val();
@@ -38,7 +42,10 @@ export const loginUser = (email, password) => {
         throw new Error("User profile not found");
       }
 
-      const preferences = userData.preferences || { theme: "light", language: "en" };
+      const preferences = userData.preferences || {
+        theme: "light",
+        language: "en",
+      };
 
       dispatch({
         type: AUTH_LOGIN_SUCCESS,
@@ -53,7 +60,10 @@ export const loginUser = (email, password) => {
       });
     } catch (error) {
       console.log(error);
-      dispatch({ type: AUTH_LOGIN_ERROR, payload: error.code || error.message });
+      dispatch({
+        type: AUTH_LOGIN_ERROR,
+        payload: error.code || error.message,
+      });
     }
   };
 };
@@ -63,7 +73,11 @@ export const signupUser = (username, email, password) => {
     try {
       dispatch({ type: AUTH_SIGNUP_PENDING });
 
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
       const user = userCredential.user;
 
       const defaultLanguage = navigator.language.startsWith("mr") ? "mr" : "en";
@@ -124,7 +138,10 @@ export const restoreSession = () => {
           return;
         }
 
-        const preferences = userData.preferences || { theme: "light", language: "en" };
+        const preferences = userData.preferences || {
+          theme: "light",
+          language: "en",
+        };
 
         dispatch({
           type: AUTH_RESTORE_SESSION,
@@ -168,7 +185,6 @@ export const updatePreferences = (uid, theme, language) => {
 
       return true;
     } catch (error) {
-      console.log(error);
       return false;
     }
   };
@@ -182,7 +198,6 @@ export const resetPassword = (email) => {
       dispatch({ type: AUTH_RESET_PASSWORD_SUCCESS });
       return true;
     } catch (error) {
-      console.log(error);
       dispatch({ type: AUTH_RESET_PASSWORD_ERROR, payload: error.code });
       return false;
     }
