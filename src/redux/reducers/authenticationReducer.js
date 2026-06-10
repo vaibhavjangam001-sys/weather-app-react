@@ -17,7 +17,7 @@ import {
 const initialState = {
   usersData: null,
   preferences: {
-    theme: localStorage.getItem("theme") || "light",
+    theme: localStorage.getItem("theme") || "dark",
     language: localStorage.getItem("language") || "en",
   },
   isAuthChecked: false,
