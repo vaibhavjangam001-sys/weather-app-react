@@ -30,6 +30,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     await dispatch(logoutUser());
     navigate("/");
+    window.location.reload();
   };
 
   return (
